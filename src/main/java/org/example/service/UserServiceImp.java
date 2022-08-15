@@ -1,15 +1,14 @@
 package org.example.service;
 
 import org.example.dao.UserDao;
-import org.example.model.Role;
-import org.example.model.RoleTable;
 import org.example.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @EnableTransactionManagement
@@ -22,6 +21,10 @@ public class UserServiceImp implements UserService {
         this.userDao = userDao;
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userDao.getUserByName(username);
+    }
 
     @Override
     public List<User> getAllUsers() {
