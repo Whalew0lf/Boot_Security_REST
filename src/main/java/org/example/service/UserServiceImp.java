@@ -21,6 +21,7 @@ public class UserServiceImp implements UserService {
         this.userDao = userDao;
     }
 
+    @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userDao.getUserByName(username);
