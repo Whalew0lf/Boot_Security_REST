@@ -41,6 +41,7 @@ public class UserController {
         User user = new User();
         user.setId(id);
         model.addAttribute("user", user);
+        model.addAttribute("test", new Boolean(true));
         return "edit";
     }
 

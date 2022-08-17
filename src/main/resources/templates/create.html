@@ -20,8 +20,16 @@
             <td><input type="text" required th:field="*{city}" /></td>
         </tr>
         <tr>
-            <td>Ажминистратор:</td>
-            <td><input type="password" required th:field="*{password}" th:value="${org.example.model.Roles.ROLE_USER.toString()}" /></td>
+            <td>Пароль:</td>
+            <td><input type="password" required th:field="*{password}" /></td>
+        </tr>
+        <tr>
+            <select th:field="*{role}">
+                <option th:each="type : ${Enum}"
+                        th:value="${org.example.model.Roles.ROLE_USER}"</option>
+                        th:value="${org.example.model.Roles.ROLE_USER}";
+                       </option>
+            </select>
         </tr>
         <tr>
             <td><button type="submit">Отправить</button></td>
