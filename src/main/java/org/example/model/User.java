@@ -10,10 +10,11 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
-@DynamicUpdate
+@Access(AccessType.FIELD)
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private Long id;
     @Column(nullable = false)
     private String name;
@@ -30,6 +31,7 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
+    @Access(AccessType.PROPERTY)
     private List<Role> role;
     public User() {
     }
@@ -40,6 +42,7 @@ public class User implements UserDetails {
         this.city = city;
     }
 
+    @Id
     public Long getId() {
         return id;
     }
@@ -64,6 +67,7 @@ public class User implements UserDetails {
         this.name = name;
     }
 
+
     public void setAge(int age) {
         this.age = age;
     }
@@ -76,13 +80,27 @@ public class User implements UserDetails {
         return role;
     }
 
-    public void setRole(List<Role> role) {
-        this.role = role;
+    public void setRole(List<Role> roles) {
+        if (roles != null) {
+            this.role = null;
+            for (Role newRole : roles) {
+                this.addRole(newRole);
+            }
+        }
     }
 
     public void addRole(Role role) {
-        if (role == null) {
-            this.role = new ArrayList<Role>();
+        if (this.role == null) {
+            this.role = new ArrayList<Role>() {
+                @Override
+                public String toString() {
+                    StringBuilder result = new StringBuilder();
+                    for (Role role : this) {
+                        result.append(role.getRole().toString()).append(", ");
+                    }
+                    return result.subSequence(0,result.length()-2).toString();
+                }
+            };
         }
         this.role.add(role);
     }

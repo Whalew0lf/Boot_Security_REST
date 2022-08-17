@@ -3,6 +3,8 @@ package org.example.controller;
 import org.example.model.User;
 import org.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -21,20 +23,20 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/users")
+    @GetMapping("/admin/users")
     public String printUsers(ModelMap model) {
         List<User> users = userService.getAllUsers();
         model.addAttribute("users", users);
         return "users";
     }
 
-    @PostMapping("/delete")
+    @PostMapping("/admin/delete")
     public String deleteUser(@RequestParam("userId") long id) {
         userService.removeUser(id);
-        return "redirect:/users";
+        return "redirect:/admin/users";
     }
 
-    @PostMapping("/edit")
+    @PostMapping("/admin/edit")
     public String openUserUpdatePage(@RequestParam("userId") long id, Model model) {
         User user = new User();
         user.setId(id);
@@ -42,22 +44,36 @@ public class UserController {
         return "edit";
     }
 
-    @PostMapping("/update")
+    @PostMapping("/admin/update")
     public String editUser(User user) {
         userService.updateUser(user);
-        return "redirect:/users";
+        return "redirect:/admin/users";
     }
 
-    @GetMapping("/create")
+    @GetMapping("/admin/create")
     public String openUserCreatePage(Model model) {
         User user = new User();
         model.addAttribute("user", user);
         return "create";
     }
 
-    @PostMapping("/create")
+    @PostMapping("/admin/create")
     public String addUser(User user) {
         userService.addUser(user);
-        return "redirect:/users";
+        return "redirect:/admin/users";
+    }
+
+    @GetMapping("/user")
+    public String showUserPage(ModelMap modelMap) {
+        String username;
+        Object principal = SecurityContextHolder. getContext(). getAuthentication(). getPrincipal();
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal). getUsername();
+        } else {
+            username = principal. toString();
+        }
+        User currentUser = (User) userService.loadUserByUsername(username);
+        modelMap.put("user", currentUser);
+        return "user";
     }
 }
