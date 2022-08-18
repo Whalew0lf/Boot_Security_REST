@@ -36,6 +36,15 @@ public class User implements UserDetails {
     public User() {
     }
 
+    public User(Long id, String name, int age, String city, String password, List<Role> role) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.city = city;
+        this.password = password;
+        this.role = role;
+    }
+
     public User(String name, int age, String city) {
         this.name = name;
         this.age = age;
@@ -80,27 +89,13 @@ public class User implements UserDetails {
         return role;
     }
 
-    public void setRole(List<Role> roles) {
-        if (roles != null) {
-            this.role = null;
-            for (Role newRole : roles) {
-                this.addRole(newRole);
-            }
-        }
+    public void setRole(List<Role> role) {
+        this.role = role;
     }
 
     public void addRole(Role role) {
         if (this.role == null) {
-            this.role = new ArrayList<Role>() {
-                @Override
-                public String toString() {
-                    StringBuilder result = new StringBuilder();
-                    for (Role role : this) {
-                        result.append(role.getRole().toString()).append(", ");
-                    }
-                    return result.subSequence(0,result.length()-2).toString();
-                }
-            };
+            this.role = new ArrayList<Role>();
         }
         this.role.add(role);
     }

@@ -12,8 +12,7 @@ public class Role implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column
-    @Enumerated(EnumType.STRING)
-    private Roles name;
+    private String name;
 
     @ManyToMany
     @JoinTable(
@@ -30,11 +29,11 @@ public class Role implements GrantedAuthority {
         this.id = id;
     }
 
-    public Roles getRole() {
+    public String getName() {
         return name;
     }
 
-    public void setRole(Roles name) {
+    public void setName(String name) {
         this.name = name;
     }
 

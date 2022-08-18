@@ -24,12 +24,19 @@
             <td><input type="password" required th:field="*{password}" /></td>
         </tr>
         <tr>
-            <select th:field="*{role}">
-                <option th:each="type : ${Enum}"
-                        th:value="${org.example.model.Roles.ROLE_USER}"</option>
-                        th:value="${org.example.model.Roles.ROLE_USER}";
-                       </option>
-            </select>
+            <div class="list">
+                <div class="row">
+                    <label class="form-check-label form-check-inline">Roles:</label>
+                    <th:block th:each="role1 : ${roles}">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="roles"
+                                   th:text="${role1.name}"
+                                   th:value="${role1}"
+                                   th:field="*{role}">
+                        </div>
+                    </th:block>
+                </div>
+            </div>
         </tr>
         <tr>
             <td><button type="submit">Отправить</button></td>

@@ -1,6 +1,8 @@
 package org.example.controller;
 
+import org.example.model.Role;
 import org.example.model.User;
+import org.example.service.RoleService;
 import org.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,10 +19,11 @@ import java.util.List;
 @Controller
 public class UserController {
     private UserService userService;
-
+    private RoleService roleService;
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @GetMapping("/admin/users")
@@ -41,7 +44,6 @@ public class UserController {
         User user = new User();
         user.setId(id);
         model.addAttribute("user", user);
-        model.addAttribute("test", new Boolean(true));
         return "edit";
     }
 
@@ -55,11 +57,14 @@ public class UserController {
     public String openUserCreatePage(Model model) {
         User user = new User();
         model.addAttribute("user", user);
+        List<Role> roles= roleService.getAllRoles();
+        model.addAttribute("roles",roles);
         return "create";
     }
 
     @PostMapping("/admin/create")
     public String addUser(User user) {
+        System.out.println("asdaf");
         userService.addUser(user);
         return "redirect:/admin/users";
     }
