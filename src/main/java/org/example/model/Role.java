@@ -21,6 +21,18 @@ public class Role implements GrantedAuthority {
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private List<User> users;
+
+    public Role() {}
+
+    public Role(String s){
+        System.out.println(s + "Наша строка");
+        if(s.equals("ROLE_USER")) {
+            this.id = 1;
+        } else if (s.equals("ROLE_ADMIN")) {
+            this.id = 2;
+        }
+        System.out.println(this.id + " id!");
+    }
     public int getId() {
         return id;
     }

@@ -65,7 +65,9 @@ public class UserController {
     @PostMapping("/admin/create")
     public String addUser(User user) {
         System.out.println("asdaf");
+        System.out.println(user.getRole() + "ааааааааааааааа");
         userService.addUser(user);
+
         return "redirect:/admin/users";
     }
 
