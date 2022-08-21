@@ -20,7 +20,7 @@
         <td th:utext="${user.name}"></td>
         <td th:utext="${user.age}"></td>
         <td th:utext="${user.city}"></td>
-        <td th:utext="${user.role}"></td>
+        <td th:utext="${user.getRolesByString()}"></td>
         <td><form method="POST" th:action="@{/admin/edit}">
             <input type="hidden" name="userId" id="updateUser" th:value="${user.id}" />
             <button>Изменить</button>
@@ -33,5 +33,9 @@
 </table>
 <br />
 <a href="/admin/create">Создать нового пользователя</a>
+<br>
+<form th:action="@{/logout}" method="POST">
+    <input type="submit" value="Logout"/>
+</form>
 </body>
 </html>

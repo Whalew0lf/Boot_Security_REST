@@ -11,8 +11,9 @@ public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column
-    private String name;
+    @Column(unique = true)
+    @Enumerated(EnumType.STRING)
+    private Roles name;
 
     @ManyToMany
     @JoinTable(
@@ -24,15 +25,13 @@ public class Role implements GrantedAuthority {
 
     public Role() {}
 
-    public Role(String s){
-        System.out.println(s + "Наша строка");
-        if(s.equals("ROLE_USER")) {
-            this.id = 1;
-        } else if (s.equals("ROLE_ADMIN")) {
-            this.id = 2;
-        }
-        System.out.println(this.id + " id!");
+    public Role(String number){
+        System.out.println(number + "1111111");
+        this.id = Integer.parseInt(number);
+        System.out.println(number + "2222222");
+        System.out.println(this + "3333333");
     }
+
     public int getId() {
         return id;
     }
@@ -41,11 +40,11 @@ public class Role implements GrantedAuthority {
         this.id = id;
     }
 
-    public String getName() {
+    public Roles getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(Roles name) {
         this.name = name;
     }
 

@@ -5,10 +5,13 @@
 </head>
 <body>
 <h1>User, welcome spring boot security page!</h1>
-asd<span th:text="${user.id}">Welcome to our grocery store!</span>asd
-<p th:text="${user.name}">Welcome to our grocery store!</p>
-<p th:text="${user.age}">Welcome to our grocery store!</p>
-<p th:text="${user.role}">Welcome to our grocery store!</p>
-
+ID: <span th:text="${user.id}"></span><br>
+Имя: <span th:text="${user.name}"></span><br>
+Возраст: <span th:text="${user.age}">!</span><br>
+Роль: <span th:text="${user.getRolesByString()}"></span><br>
 </body>
+<br>
+<form th:action="@{/logout}" method="POST">
+    <input type="submit" value="Logout"/>
+</form>
 </html>

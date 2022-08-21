@@ -16,7 +16,7 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
     @Column(nullable = false)
     private int age;
@@ -36,21 +36,9 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(Long id, String name, int age, String city, String password, List<Role> role) {
+    public  User(long id) {
         this.id = id;
-        this.name = name;
-        this.age = age;
-        this.city = city;
-        this.password = password;
-        this.role = role;
     }
-
-    public User(String name, int age, String city) {
-        this.name = name;
-        this.age = age;
-        this.city = city;
-    }
-
     @Id
     public Long getId() {
         return id;
@@ -137,6 +125,17 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRolesByString() {
+        if (role == null || role.isEmpty()) {
+            return "";
+        }
+        StringBuilder str = new StringBuilder();
+        for (Role role: this.role) {
+            str.append(role.getName()).append(", ");
+        }
+        return str.substring(0, str.length() - 2);
     }
 
     @Override

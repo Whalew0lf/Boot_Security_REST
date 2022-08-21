@@ -41,14 +41,16 @@ public class UserController {
 
     @PostMapping("/admin/edit")
     public String openUserUpdatePage(@RequestParam("userId") long id, Model model) {
-        User user = new User();
-        user.setId(id);
+        User user = new User(id);
         model.addAttribute("user", user);
+        List<Role> roles= roleService.getAllRoles();
+        model.addAttribute("roles",roles);
         return "edit";
     }
 
     @PostMapping("/admin/update")
     public String editUser(User user) {
+        System.out.println(user);
         userService.updateUser(user);
         return "redirect:/admin/users";
     }

@@ -8,24 +8,41 @@
 <form action="#" th:action="@{/admin/update}" th:object="${user}" method="post" >
     <table>
         <tr>
-            <td><input type="hidden" th:field="*{id}" /></td>
-        </tr>
-        <tr>
+            <input type="hidden" th:field="*{id}" th:value="${user.id}">
             <td>Имя:</td>
-            <td><input type="text" th:field="*{name}" /></td>
+            <td><input type="text" required th:field="*{name}" /></td>
         </tr>
         <tr>
             <td>Возраст:</td>
-            <td><input type="number" th:field="*{age}" /></td>
+            <td><input type="number" required th:field="*{age}" /></td>
         </tr>
         <tr>
             <td>Город:</td>
-            <td><input type="text" th:field="*{city}" /></td>
+            <td><input type="text" required th:field="*{city}" /></td>
+        </tr>
+        <tr>
+            <td>Пароль:</td>
+            <td><input type="password" required th:field="*{password}" /></td>
+        </tr>
+        <tr>
+            <td>
+                Роли:
+                <th:block th:each="newRole : ${roles}">
+                    <input type="checkbox" name="roles"
+                           th:text="${newRole.name}"
+                           th:value="${newRole.id}"
+                           th:field="*{role}">
+                </th:block>
+            </td>
         </tr>
         <tr>
             <td><button type="submit">Отправить</button></td>
         </tr>
     </table>
+</form>
+<br>
+<form th:action="@{/logout}" method="POST">
+    <input type="submit" value="Logout"/>
 </form>
 </body>
 </html>
