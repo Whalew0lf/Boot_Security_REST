@@ -26,10 +26,7 @@ public class Role implements GrantedAuthority {
     public Role() {}
 
     public Role(String number){
-        System.out.println(number + "1111111");
         this.id = Integer.parseInt(number);
-        System.out.println(number + "2222222");
-        System.out.println(this + "3333333");
     }
 
     public int getId() {
