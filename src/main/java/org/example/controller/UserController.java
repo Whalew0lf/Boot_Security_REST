@@ -19,61 +19,13 @@ import java.util.List;
 @Controller
 public class UserController {
     private UserService userService;
-    private RoleService roleService;
+
     @Autowired
-    public UserController(UserService userService, RoleService roleService) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.roleService = roleService;
     }
 
-    @GetMapping("/admin/users")
-    public String printUsers(ModelMap model) {
-        List<User> users = userService.getAllUsers();
-        model.addAttribute("users", users);
-        return "users";
-    }
-
-    @PostMapping("/admin/delete")
-    public String deleteUser(@RequestParam("userId") long id) {
-        userService.removeUser(id);
-        return "redirect:/admin/users";
-    }
-
-    @PostMapping("/admin/edit")
-    public String openUserUpdatePage(@RequestParam("userId") long id, Model model) {
-        User user = new User(id);
-        model.addAttribute("user", user);
-        List<Role> roles= roleService.getAllRoles();
-        model.addAttribute("roles",roles);
-        return "edit";
-    }
-
-    @PostMapping("/admin/update")
-    public String editUser(User user) {
-        System.out.println(user);
-        userService.updateUser(user);
-        return "redirect:/admin/users";
-    }
-
-    @GetMapping("/admin/create")
-    public String openUserCreatePage(Model model) {
-        User user = new User();
-        model.addAttribute("user", user);
-        List<Role> roles= roleService.getAllRoles();
-        model.addAttribute("roles",roles);
-        return "create";
-    }
-
-    @PostMapping("/admin/create")
-    public String addUser(User user) {
-        System.out.println("asdaf");
-        System.out.println(user.getRole() + "ааааааааааааааа");
-        userService.addUser(user);
-
-        return "redirect:/admin/users";
-    }
-
-    @GetMapping("/user")
+       @GetMapping("/user")
     public String showUserPage(ModelMap modelMap) {
         String username;
         Object principal = SecurityContextHolder. getContext(). getAuthentication(). getPrincipal();
