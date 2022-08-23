@@ -70,5 +70,4 @@ public class AdminController {
         userService.addUser(user);
         return "redirect:/admin /users";
     }
-
 }

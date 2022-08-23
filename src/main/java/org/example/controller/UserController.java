@@ -30,7 +30,7 @@ public class UserController {
         String username;
         Object principal = SecurityContextHolder. getContext(). getAuthentication(). getPrincipal();
         if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal). getUsername();
+            username = ((UserDetails) principal). getUsername();
         } else {
             username = principal. toString();
         }
