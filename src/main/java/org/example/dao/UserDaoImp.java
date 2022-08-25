@@ -19,7 +19,7 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
-        return entityManager.createQuery("SELECT u from User u", User.class).getResultList();
+        return entityManager.createQuery("SELECT u FROM User u LEFT JOIN FETCH u.role", User.class).getResultList();
     }
 
     @Override
@@ -40,11 +40,10 @@ public class UserDaoImp implements UserDao {
     @Override
     @Transactional
     public User getUserByName(String name) {
-        TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u WHERE u.name = :name", User.class);
+        TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u  LEFT JOIN FETCH u.role WHERE u.name = :name", User.class);
         query.setParameter("name", name);
         query.setMaxResults(1);
         User user = query.getSingleResult();
-        System.out.println(user.getRole());
         return user;
     }
 }
