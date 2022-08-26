@@ -5,6 +5,8 @@ import org.example.model.User;
 import org.example.service.RoleService;
 import org.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -29,8 +31,16 @@ public class AdminController {
 
     @GetMapping("/users")
     public String printUsers(ModelMap model) {
+        String username;
+        String roles;
+
         List<User> users = userService.getAllUsers();
         model.addAttribute("users", users);
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        username = ((UserDetails) principal).getUsername();
+        roles = ((User) principal).getRolesByString();
+        model.put("currentUser", username);
+        model.put("currentRoles", roles);
         return "users";
     }
 
