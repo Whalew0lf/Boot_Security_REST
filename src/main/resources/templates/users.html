@@ -1,19 +1,30 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
-<table border=1>
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+    <div class="container-fluid">
+        <text class="navbar-brand">
+            <span th:text="${currentUser}"></span>
+            with roles:
+            <span th:text="${currentRoles}"></span>
+        </text>
+    </div>
+</nav>
+<table class="table table-striped">
+    <tr></tr>
     <tr>
-        <td>ID</td>
-        <td>Имя пользователя</td>
-        <td>Возраст</td>
-        <td>Город</td>
-        <td>Роли</td>
-        <td>Изменить</td>
-        <td>Удалить</td>
+        <th scope="col">ID</th>
+        <th scope="col">Имя пользователя</th>
+        <th scope="col">Возраст</th>
+        <th scope="col">Город</th>
+        <th scope="col">Роли</th>
+        <th scope="col">Изменить</th>
+        <th scope="col">Удалить</th>
     </tr>
     <tr th:each="user : ${users}">
         <td th:utext="${user.id}"></td>
@@ -23,11 +34,11 @@
         <td th:utext="${user.getRolesByString()}"></td>
         <td><form method="POST" th:action="@{/admin/edit}">
             <input type="hidden" name="userId" id="updateUser" th:value="${user.id}" />
-            <button>Изменить</button>
+            <button type="button" class="btn btn-info text-light">Изменить</button>
         </form></td>
         <td><form method="POST" th:action="@{/admin/delete}">
             <input type="hidden" name="userId" id="removeUser" th:value="${user.id}" />
-            <button>Удалить</button>
+            <button type="button" class="btn btn-danger">Удалить</button>
         </form></td>
     </tr>
 </table>
