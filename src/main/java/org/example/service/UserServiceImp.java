@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 @EnableTransactionManagement
 @Service
@@ -32,8 +33,9 @@ public class UserServiceImp implements UserService {
         return userDao.getUserByName(username);
     }
 
+    @Transactional
     @Override
-    public List<User> getAllUsers() {
+    public Set<User> getAllUsers() {
         return userDao.getAllUsers();
     }
 

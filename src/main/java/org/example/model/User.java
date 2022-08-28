@@ -11,7 +11,7 @@ import java.util.*;
 
 @Entity
 @Access(AccessType.FIELD)
-public class User implements UserDetails {
+public class User implements UserDetails, Comparable<User> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -160,5 +160,10 @@ public class User implements UserDetails {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public int compareTo(User o) {
+        return Long.compare(this.getId(), o.getId());
     }
 }

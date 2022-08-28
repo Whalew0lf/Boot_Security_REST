@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping(value = "/admin")
@@ -34,7 +35,7 @@ public class AdminController {
         String username;
         String roles;
 
-        List<User> users = userService.getAllUsers();
+        Set<User> users = userService.getAllUsers();
         model.addAttribute("users", users);
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         username = ((UserDetails) principal).getUsername();
@@ -47,7 +48,7 @@ public class AdminController {
     @PostMapping("/delete")
     public String deleteUser(@RequestParam("userId") long id) {
         userService.removeUser(id);
-        return "redirect:/users";
+        return "redirect:/admin/users";
     }
 
     @PostMapping("/edit")
@@ -78,6 +79,6 @@ public class AdminController {
     @PostMapping("/create")
     public String addUser(User user) {
         userService.addUser(user);
-        return "redirect:/admin /users";
+        return "redirect:/admin/users";
     }
 }

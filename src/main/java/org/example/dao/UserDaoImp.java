@@ -9,7 +9,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 @Repository
 public class UserDaoImp implements UserDao {
@@ -18,8 +22,9 @@ public class UserDaoImp implements UserDao {
     private EntityManager entityManager;
 
     @Override
-    public List<User> getAllUsers() {
-        return entityManager.createQuery("SELECT u FROM User u LEFT JOIN FETCH u.role", User.class).getResultList();
+    public Set<User> getAllUsers() {
+        return entityManager.createQuery("SELECT u FROM User u JOIN FETCH u.role", User.class)
+                .getResultStream().collect(Collectors.toCollection(TreeSet::new));
     }
 
     @Override
