@@ -16,12 +16,17 @@ public class User implements UserDetails, Comparable<User> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
-    @Column(nullable = false, unique = true)
-    private String name;
+
+    @Column(nullable = false)
+    private String firstName;
+
+    @Column(nullable = false)
+    private String lastName;
     @Column(nullable = false)
     private int age;
-    @Column(nullable = false)
-    private String city;
+
+    @Column(nullable = false, unique = true)
+    private String email;
     @Column(nullable = false)
     private String password;
 
@@ -38,38 +43,46 @@ public class User implements UserDetails, Comparable<User> {
     public  User(long id) {
         this.id = id;
     }
+
     @Id
     public Long getId() {
         return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public String getCity() {
-        return city;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getFirstName() {
+        return firstName;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public int getAge() {
+        return age;
+    }
 
     public void setAge(int age) {
         this.age = age;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public List<Role> getRole() {
@@ -94,7 +107,7 @@ public class User implements UserDetails, Comparable<User> {
 
     @Override
     public String getUsername() {
-        return name;
+        return email;
     }
 
     @Override
@@ -141,9 +154,10 @@ public class User implements UserDetails, Comparable<User> {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", age=" + age +
-                ", city='" + city + '\'' +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", role=" + role +
                 '}';

@@ -3,46 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
-<form action="#" th:action="@{/admin/create}" th:object="${user}" method="post" >
-    <table>
-        <tr>
-            <td>Имя:</td>
-            <td><input type="text" required th:field="*{name}" /></td>
-        </tr>
-        <tr>
-            <td>Возраст:</td>
-            <td><input type="number" required th:field="*{age}" /></td>
-        </tr>
-        <tr>
-            <td>Город:</td>
-            <td><input type="text" required th:field="*{city}" /></td>
-        </tr>
-        <tr>
-            <td>Пароль:</td>
-            <td><input type="password" required th:field="*{password}" /></td>
-        </tr>
-        <tr>
-            <td>
-                Роли:
-                <th:block th:each="newRole : ${roles}">
-                    <input type="checkbox" name="roles"
-                           th:text="${newRole.name}"
-                           th:value="${newRole.id}"
-                           th:field="*{role}">
-                </th:block>
-            </td>
-        </tr>
-        <tr>
-            <td><button type="submit">Отправить</button></td>
-        </tr>
-    </table>
-
-</form>
-<br>
-<form th:action="@{/logout}" method="POST">
-    <input type="submit" value="Logout"/>
-</form>
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+    <div class="container-fluid">
+        <text class="navbar-brand">
+            <span th:text="${currentUser}"></span>
+            with roles:
+            <span th:text="${currentRoles}"></span>
+        </text>
+        <form th:action="@{/logout}" method="POST">
+            <input class="btn btn-dark" type="submit" value="Logout"/>
+        </form>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="row vh-100">
+        <div class="col-2">
+            <br>
+            <ul class="nav flex-column nav nav-pills nav-fill">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/admin/users">Admin</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/user">User</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col bg-light">
+            <div class="container">
+                <br>
+                <p class="h1">Admin panel</p>
+                <br>
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/users">User table</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">New user</a>
+                    </li>
+                    <div class="container border">
+                        <br>
+                        <p class="h4">Add new user</p>
+                    </div>
+                    <div class="container border bg-white">
+                        <form action="#" th:action="@{/admin/create}" th:object="${user}" method="post" >
+                            <table>
+                                <tr>
+                                    <td>Имя:</td>
+                                    <td><input type="text" required th:field="*{firstName}" /></td>
+                                </tr>
+                                <tr>
+                                    <td>Имя:</td>
+                                    <td><input type="text" required th:field="*{lastName}" /></td>
+                                </tr>
+                                <tr>
+                                    <td>Возраст:</td>
+                                    <td><input type="number" required th:field="*{age}" /></td>
+                                </tr>
+                                <tr>
+                                    <td>Город:</td>
+                                    <td><input type="text" required th:field="*{email}" /></td>
+                                </tr>
+                                <tr>
+                                    <td>Пароль:</td>
+                                    <td><input type="password" required th:field="*{password}" /></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Роли:
+                                        <th:block th:each="newRole : ${roles}">
+                                            <input type="checkbox" name="roles"
+                                                   th:text="${newRole.name}"
+                                                   th:value="${newRole.id}"
+                                                   th:field="*{role}">
+                                        </th:block>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><button type="submit">Отправить</button></td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                    <br>
+                </ul>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

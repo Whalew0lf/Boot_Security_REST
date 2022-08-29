@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Set;
 
 @EnableTransactionManagement
@@ -30,7 +29,7 @@ public class UserServiceImp implements UserService {
     @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userDao.getUserByName(username);
+        return userDao.getUserByEmail(username);
     }
 
     @Transactional

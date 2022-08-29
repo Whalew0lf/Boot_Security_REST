@@ -68,11 +68,18 @@ public class AdminController {
     }
 
     @GetMapping("/create")
-    public String openUserCreatePage(Model model) {
+    public String openUserCreatePage(ModelMap model) {
+        String username;
+        String currentRoles;
         User user = new User();
-        model.addAttribute("user", user);
+        model.put("user", user);
         List<Role> roles= roleService.getAllRoles();
-        model.addAttribute("roles",roles);
+        model.put("roles",roles);
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        username = ((UserDetails) principal).getUsername();
+        currentRoles = ((User) principal).getRolesByString();
+        model.put("currentUser", username);
+        model.put("currentRoles", currentRoles);
         return "create";
     }
 

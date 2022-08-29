@@ -44,9 +44,9 @@ public class UserDaoImp implements UserDao {
 
     @Override
     @Transactional
-    public User getUserByName(String name) {
-        TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u  LEFT JOIN FETCH u.role WHERE u.name = :name", User.class);
-        query.setParameter("name", name);
+    public User getUserByEmail(String name) {
+        TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u  LEFT JOIN FETCH u.role WHERE u.email = :email", User.class);
+        query.setParameter("email", name);
         query.setMaxResults(1);
         User user = query.getSingleResult();
         return user;

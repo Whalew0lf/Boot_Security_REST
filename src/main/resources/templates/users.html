@@ -18,8 +18,8 @@
         </form>
     </div>
 </nav>
-<div class="w-100">
-    <div class="row">
+<div class="container-fluid">
+    <div class="row vh-100">
         <div class="col-2">
             <br>
             <ul class="nav flex-column nav nav-pills nav-fill">
@@ -53,26 +53,28 @@
                             <tr></tr>
                             <tr>
                                 <th scope="col">ID</th>
-                                <th scope="col">Имя пользователя</th>
-                                <th scope="col">Возраст</th>
-                                <th scope="col">Город</th>
-                                <th scope="col">Роли</th>
-                                <th scope="col">Изменить</th>
-                                <th scope="col">Удалить</th>
+                                <th scope="col">First Name</th>
+                                <th scope="col">Last Name</th>
+                                <th scope="col">Age</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Role</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
                             </tr>
                             <tr th:each="user : ${users}">
                                 <td th:utext="${user.id}"></td>
-                                <td th:utext="${user.name}"></td>
+                                <td th:utext="${user.firstName}"></td>
+                                <td th:utext="${user.lastName}"></td>
                                 <td th:utext="${user.age}"></td>
-                                <td th:utext="${user.city}"></td>
+                                <td th:utext="${user.email}"></td>
                                 <td th:utext="${user.getRolesByString()}"></td>
                                 <td><form method="POST" th:action="@{/admin/edit}">
                                     <input type="hidden" name="userId" id="updateUser" th:value="${user.id}" />
-                                    <button type="submit" class="btn btn-info text-light">Изменить</button>
+                                    <button type="submit" class="btn btn-info text-light">Edit</button>
                                 </form></td>
                                 <td><form method="POST" th:action="@{/admin/delete}">
                                     <input type="hidden" name="userId" id="removeUser" th:value="${user.id}" />
-                                    <button type="submit" class="btn btn-danger">Удалить</button>
+                                    <button type="submit" class="btn btn-danger">Delete</button>
                                 </form></td>
                             </tr>
                         </table>
