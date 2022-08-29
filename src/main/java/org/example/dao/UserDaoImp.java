@@ -23,7 +23,7 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public Set<User> getAllUsers() {
-        return entityManager.createQuery("SELECT u FROM User u JOIN FETCH u.role", User.class)
+        return entityManager.createQuery("SELECT u FROM User u LEFT JOIN FETCH u.role", User.class)
                 .getResultStream().collect(Collectors.toCollection(TreeSet::new));
     }
 
