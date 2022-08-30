@@ -10,7 +10,7 @@
 <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
     <div class="container-fluid">
         <text class="navbar-brand">
-            <span th:text="${currentUser}"></span>
+            <span class="fw-bold" th:text="${currentUser}"></span>
             with roles:
             <span th:text="${currentRoles}"></span>
         </text>
@@ -48,45 +48,37 @@
                         <br>
                         <p class="h4">Add new user</p>
                     </div>
-                    <div class="container border bg-white">
-                        <form action="#" th:action="@{/admin/create}" th:object="${user}" method="post" >
-                            <table>
-                                <tr>
-                                    <td>Имя:</td>
-                                    <td><input type="text" required th:field="*{firstName}" /></td>
-                                </tr>
-                                <tr>
-                                    <td>Имя:</td>
-                                    <td><input type="text" required th:field="*{lastName}" /></td>
-                                </tr>
-                                <tr>
-                                    <td>Возраст:</td>
-                                    <td><input type="number" required th:field="*{age}" /></td>
-                                </tr>
-                                <tr>
-                                    <td>Город:</td>
-                                    <td><input type="text" required th:field="*{email}" /></td>
-                                </tr>
-                                <tr>
-                                    <td>Пароль:</td>
-                                    <td><input type="password" required th:field="*{password}" /></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Роли:
-                                        <th:block th:each="newRole : ${roles}">
-                                            <input type="checkbox" name="roles"
-                                                   th:text="${newRole.name}"
-                                                   th:value="${newRole.id}"
-                                                   th:field="*{role}">
-                                        </th:block>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><button type="submit">Отправить</button></td>
-                                </tr>
-                            </table>
-                        </form>
+                    <div class="container border bg-white text-center fw-bold">
+                        <div class="row">
+                            <div class="col">
+                            </div>
+                            <div class="col-4">
+                                <form action="#" th:action="@{/admin/create}" th:object="${user}" method="post" >
+                                    <br>
+                                    First name<br>
+                                    <input class="form-control" type="text" required th:field="*{firstName}" /><br>
+                                    Last name<br>
+                                    <input class="form-control" type="text" required th:field="*{lastName}" /><br>
+                                    Age<br>
+                                    <input class="form-control" type="number" required th:field="*{age}" /><br>
+                                    Email<br>
+                                    <input class="form-control" type="text" required th:field="*{email}" /><br>
+                                    Password<br>
+                                    <input class="form-control" type="password" required th:field="*{password}" /><br>
+                                    Roles<br>
+                                    <select class="form-select" multiple th:field="*{role}" th:size="${roles.size()}">
+                                        <option th:each="newRole : ${roles}" name="roles"
+                                                th:text="${newRole.name}"
+                                                th:value="${newRole.id}">
+                                    </select>
+                                    <div class="p-3">
+                                        <button type="submit" class="btn btn-success">Add new user</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col">
+                            </div>
+                        </div>
                     </div>
                     <br>
                 </ul>

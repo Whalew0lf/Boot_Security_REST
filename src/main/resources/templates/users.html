@@ -9,7 +9,7 @@
 <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
     <div class="container-fluid">
         <text class="navbar-brand">
-            <span th:text="${currentUser}"></span>
+            <span class="fw-bold" th:text="${currentUser}"></span>
             with roles:
             <span th:text="${currentRoles}"></span>
         </text>
@@ -72,10 +72,9 @@
                                     <input type="hidden" name="userId" id="updateUser" th:value="${user.id}" />
                                     <button type="submit" class="btn btn-info text-light">Edit</button>
                                 </form></td>
-                                <td><form method="POST" th:action="@{/admin/delete}">
-                                    <input type="hidden" name="userId" id="removeUser" th:value="${user.id}" />
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form></td>
+                                <td>
+                                    <button class="btn btn-danger" data-toggle="modal" th:attr="data-target=${'#editModal'+user.id}">Delete</button>
+                                </td>
                             </tr>
                         </table>
                     </div>
@@ -85,6 +84,9 @@
             </div>
         </div>
     </div>
+</div>
+<div th:each="user : ${users}" th:attr="id=${'editModal' + user.id}">
+            <div class="modal-body">...</div>
 </div>
 </body>
 </html>
