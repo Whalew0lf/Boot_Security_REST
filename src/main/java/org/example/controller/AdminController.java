@@ -31,7 +31,7 @@ public class AdminController {
     }
 
     @GetMapping("/users")
-    public String printUsers(ModelMap model) {
+    public String openAdminPage(ModelMap model) {
         String username;
         String roles;
 
@@ -42,6 +42,9 @@ public class AdminController {
         roles = ((User) principal).getRolesByString();
         model.put("currentUser", username);
         model.put("currentRoles", roles);
+        List<Role> allRoles = roleService.getAllRoles();
+        model.addAttribute("roles",allRoles);
+        model.addAttribute("editUser", new User());
         return "users";
     }
 

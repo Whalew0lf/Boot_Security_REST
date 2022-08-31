@@ -37,8 +37,7 @@ public class User implements UserDetails, Comparable<User> {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private List<Role> role;
-    public User() {
-    }
+    public User() {}
 
     public  User(long id) {
         this.id = id;
@@ -179,5 +178,14 @@ public class User implements UserDetails, Comparable<User> {
     @Override
     public int compareTo(User o) {
         return Long.compare(this.getId(), o.getId());
+    }
+
+    public boolean hasRole(Roles checkedRole) {
+        for (Role thisRole : role) {
+            if (thisRole.getName() == checkedRole) {
+                return true;
+            }
+        }
+        return false;
     }
 }

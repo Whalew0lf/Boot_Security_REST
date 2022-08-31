@@ -69,18 +69,57 @@
                                 <td th:utext="${user.age}"></td>
                                 <td th:utext="${user.email}"></td>
                                 <td th:utext="${user.getRolesByString()}"></td>
-                                <td><form method="POST" th:action="@{/admin/edit}">
-                                    <input type="hidden" name="userId" id="updateUser" th:value="${user.id}" />
-                                    <button type="submit" class="btn btn-info text-light">Edit</button>
-                                </form></td>
+                                <td><button class="btn btn-info text-light" data-bs-toggle="modal" th:attr="data-bs-target=${'#editModal'+user.id}">Edit</button></td>
+                                <div th:attr="id=${'editModal'+user.id}" class="modal" tabindex="-2">
+                                    <div class="modal-dialog">
+                                        <form th:action="@{/admin/update}" th:object="${editUser}" method="post">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modalEdit">Edit user</h5>
+                                                <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-3">
+                                                    </div>
+                                                    <div class="col-6 text-center fw-bold">
+                                                            <br>
+                                                            ID<br>
+                                                            <input class="form-control" type="text" readonly required th:value="${user.id}" name="id"><br>
+                                                            <br>
+                                                            First name<br>
+                                                            <input class="form-control" type="text" required th:value="${user.firstName}" name="firstName"/><br>
+                                                            Last name<br>
+                                                            <input class="form-control" type="text" required th:value="${user.lastName}" name="lastName"/><br>
+                                                            Age<br>
+                                                            <input class="form-control" type="number" required th:value="${user.age}" name="age"/><br>
+                                                            Email<br>
+                                                            <input class="form-control" type="email" required th:value="${user.email}" name="email" /><br>
+                                                            Password<br>
+                                                            <input class="form-control" type="password" required th:field="*{password}" /><br>
+                                                            Roles<br>
+                                                            <select class="form-select" th:field="*{role}" multiple th:size="${roles.size()}">
+                                                                <option  th:each="role : ${roles}" name="roles" th:text="${role.name}" th:value="${role.id}"></option>
+                                                            </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Edit</button>
+                                            </div>
+                                        </div>
+                                        </form>
+                                    </div>
+                                </div>
                                 <td>
-                                    <button class="btn btn-danger" data-bs-toggle="modal" th:attr="data-bs-target=${'#editModal'+user.id}">Delete</button>
+                                    <button class="btn btn-danger" data-bs-toggle="modal" th:attr="data-bs-target=${'#deleteModal'+user.id}">Delete</button>
                                 </td>
-                                <div th:attr="id=${'editModal'+user.id}" class="modal" tabindex="-1">
+                                <div th:attr="id=${'deleteModal'+user.id}" class="modal" tabindex="-1">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="modalBasicLabel">Delete user</h5>
+                                                <h5 class="modal-title" id="modalDelete">Delete user</h5>
                                                 <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
                                             </div>
                                             <div class="modal-body">
@@ -94,7 +133,7 @@
                                                                 <input class="form-control" disabled="disabled" type="text" required th:value="*{user.id}" /><br>
                                                                 <br>
                                                                 First name<br>
-                                                                <input class="form-control" disabled="disabled" type="text" required th:value="*{user.lastName}" /><br>
+                                                                <input class="form-control" disabled="disabled" type="text" required th:value="*{user.firstName}" /><br>
                                                                 Last name<br>
                                                                 <input class="form-control" disabled="disabled" type="text" required th:value="*{user.lastName}" /><br>
                                                                 Age<br>

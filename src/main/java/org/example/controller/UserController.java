@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import org.example.model.Role;
+import org.example.model.Roles;
 import org.example.model.User;
 import org.example.service.RoleService;
 import org.example.service.UserService;
@@ -25,7 +26,7 @@ public class UserController {
         this.userService = userService;
     }
 
-       @GetMapping("/user")
+    @GetMapping("/user")
     public String showUserPage(ModelMap modelMap) {
         String username;
         Object principal = SecurityContextHolder. getContext(). getAuthentication(). getPrincipal();
@@ -36,6 +37,7 @@ public class UserController {
         }
         User currentUser = (User) userService.loadUserByUsername(username);
         modelMap.put("user", currentUser);
+        modelMap.put("adminRole", Roles.ROLE_ADMIN);
         return "user";
     }
 }
