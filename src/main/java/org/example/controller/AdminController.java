@@ -54,15 +54,6 @@ public class AdminController {
         return "redirect:/admin/users";
     }
 
-    @PostMapping("/edit")
-    public String openUserUpdatePage(@RequestParam("userId") long id, Model model) {
-        User user = new User(id);
-        model.addAttribute("user", user);
-        List<Role> roles= roleService.getAllRoles();
-        model.addAttribute("roles",roles);
-        return "edit";
-    }
-
     @PostMapping("/update")
     public String editUser(User user) {
         System.out.println(user);
