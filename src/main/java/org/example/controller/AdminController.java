@@ -5,6 +5,7 @@ import org.example.model.User;
 import org.example.service.RoleService;
 import org.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Set;
@@ -31,55 +33,39 @@ public class AdminController {
     }
 
     @GetMapping("/users")
-    public String openAdminPage(ModelMap model) {
-        String username;
-        String roles;
-
-        Set<User> users = userService.getAllUsers();
-        model.addAttribute("users", users);
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        username = ((UserDetails) principal).getUsername();
-        roles = ((User) principal).getRolesByString();
-        model.put("currentUser", username);
-        model.put("currentRoles", roles);
-        List<Role> allRoles = roleService.getAllRoles();
-        model.addAttribute("roles",allRoles);
-        model.addAttribute("editUser", new User());
-        return "users";
+    public ModelAndView openAdminPage(@AuthenticationPrincipal UserDetails userDetails) {
+        ModelAndView modelAndView = new ModelAndView("users");
+        modelAndView.addObject("users", userService.getAllUsers());
+        modelAndView.addObject("currentUser", userDetails.getUsername());
+        modelAndView.addObject("currentRoles", ((User) userDetails).getRolesByString());
+        modelAndView.addObject("editUser", new User());
+        return modelAndView;
     }
 
     @PostMapping("/delete")
-    public String deleteUser(@RequestParam("userId") long id) {
+    public ModelAndView deleteUser(@RequestParam("userId") long id) {
         userService.removeUser(id);
-        return "redirect:/admin/users";
+        return new ModelAndView("redirect:/admin/users");
     }
 
     @PostMapping("/update")
-    public String editUser(User user) {
-        System.out.println(user);
+    public ModelAndView editUser(User user) {
         userService.updateUser(user);
-        return "redirect:/admin/users";
+        return new ModelAndView("redirect:/admin/users");
     }
 
     @GetMapping("/create")
-    public String openUserCreatePage(ModelMap model) {
-        String username;
-        String currentRoles;
-        User user = new User();
-        model.put("user", user);
-        List<Role> roles= roleService.getAllRoles();
-        model.put("roles",roles);
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        username = ((UserDetails) principal).getUsername();
-        currentRoles = ((User) principal).getRolesByString();
-        model.put("currentUser", username);
-        model.put("currentRoles", currentRoles);
-        return "create";
+    public ModelAndView openUserCreatePage(@AuthenticationPrincipal UserDetails userDetails) {
+        ModelAndView modelAndView = new ModelAndView("create");
+        modelAndView.addObject("user", new User());
+        modelAndView.addObject("currentUser", userDetails.getUsername());
+        modelAndView.addObject("currentRoles", ((User) userDetails).getRolesByString());
+        return modelAndView;
     }
 
     @PostMapping("/create")
-    public String addUser(User user) {
+    public ModelAndView addUser(User user) {
         userService.addUser(user);
-        return "redirect:/admin/users";
+        return new ModelAndView("redirect:/admin/users");
     }
 }

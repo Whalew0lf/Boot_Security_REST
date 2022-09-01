@@ -98,8 +98,9 @@
                                                             Password<br>
                                                             <input class="form-control" type="password" required th:field="*{password}" /><br>
                                                             Roles<br>
-                                                            <select class="form-select" th:field="*{role}" multiple th:size="${roles.size()}">
-                                                                <option  th:each="role : ${roles}" name="roles" th:text="${role.name}" th:value="${role.id}"></option>
+                                                            <select class="form-select" th:field="*{role}" multiple size=2>
+                                                                <option value="1">ROLE_USER</option>
+                                                                <option value="2">ROLE_ADMIN</option>
                                                             </select>
                                                     </div>
                                                 </div>
