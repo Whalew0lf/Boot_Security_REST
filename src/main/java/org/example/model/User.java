@@ -1,6 +1,8 @@
 package org.example.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.core.GrantedAuthority;
@@ -99,45 +101,54 @@ public class User implements UserDetails, Comparable<User> {
         this.role.add(role);
     }
 
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return role;
     }
 
+    @JsonIgnore
     @Override
     public String getUsername() {
         return email;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isEnabled() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public String getPassword() {
         return password;
     }
 
+    @JsonSetter
     public void setPassword(String password) {
         this.password = password;
     }
 
+    @JsonIgnore
     public String getRolesByString() {
         if (role == null || role.isEmpty()) {
             return "";

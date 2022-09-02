@@ -2,6 +2,7 @@ package org.example.dao;
 
 import org.example.model.Role;
 import org.example.model.User;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
