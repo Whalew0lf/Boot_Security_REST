@@ -4,6 +4,8 @@ import org.example.model.User;
 import org.example.service.RoleService;
 import org.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +25,6 @@ public class TestController {
 
     @RequestMapping(path = "/get-all",
             method = {RequestMethod.POST})
-    @ResponseBody
     public Set<User> getAllUser() {
         return userService.getAllUsers();
     }
@@ -42,4 +43,22 @@ public class TestController {
         return "success";
     }
 
+    @RequestMapping(path = "/get-current",
+            method = {RequestMethod.POST})
+    public UserDetails getCurrentUser(@AuthenticationPrincipal UserDetails user) {
+        return user;
+    }
+
+    @RequestMapping(path = "/update",
+            method = {RequestMethod.POST})
+    public String updateUser(@RequestBody User user) {
+        userService.updateUser(user);
+        return "success";
+    }
+
+    @RequestMapping(path = "/get",
+            method = {RequestMethod.POST})
+    public User getUserById(Long id) {
+        return userService.getUserById(id);
+    }
 }

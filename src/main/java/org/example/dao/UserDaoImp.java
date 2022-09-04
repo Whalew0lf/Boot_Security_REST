@@ -52,5 +52,11 @@ public class UserDaoImp implements UserDao {
         User user = query.getSingleResult();
         return user;
     }
+
+    @Override
+    public User getUserById(Long id) {
+        return entityManager.createQuery("SELECT u FROM User u LEFT JOIN FETCH u.role WHERE u.id = :id ", User.class).
+                setParameter("id", id).getSingleResult();
+    }
 }
 

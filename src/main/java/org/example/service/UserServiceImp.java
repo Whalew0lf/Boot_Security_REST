@@ -56,4 +56,10 @@ public class UserServiceImp implements UserService {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userDao.updateUser(user);
     }
+
+    @Transactional
+    @Override
+    public User getUserById(Long id) {
+        return userDao.getUserById(id);
+    }
 }
