@@ -3,5 +3,8 @@ $(document).ready(function(){
 
 });
 $("#add").click( function( evnt ) {
-    alert( "Привет" );
+    $.post("/api/get-all",function (data) {
+        $("#id").html(data[1]["email"]);
+    })
+
 });

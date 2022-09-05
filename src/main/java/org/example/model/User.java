@@ -148,7 +148,6 @@ public class User implements UserDetails, Comparable<User> {
         this.password = password;
     }
 
-    @JsonIgnore
     public String getRolesByString() {
         if (role == null || role.isEmpty()) {
             return "";
