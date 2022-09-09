@@ -26,30 +26,30 @@
             <br>
             <ul class="nav flex-column nav nav-pills nav-fill">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Admin</a>
+                    <a class="nav-link active" href="#" id="adminLink">Admin</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/user">User</a>
+                    <a class="nav-link" href="#" id="userLink">User</a>
                 </li>
             </ul>
         </div>
         <div class="col bg-light">
-            <div class="container">
+            <div class="container" id="adminPage" hidden>
                 <br>
-                <p class="h1">Admin panel</p>
+                <p class="h1" id="panelName">Admin panel</p>
                 <br>
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">User table</a>
+                        <a class="nav-link active" href="#" id="userTableLink">User table</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin/create">New user</a>
+                        <a class="nav-link" href="#" id="newUserLink">New user</a>
                     </li>
                     <div class="container border">
                         <br>
-                        <p class="h4">All users</p>
+                        <p class="h4" id="tabName">All users</p>
                     </div>
-                    <div class="container border bg-white">
+                    <div class="container border bg-white" id="usersTablePage" hidden>
                         <br>
                         <table id="usersTable" class="table table-striped border-top">
                             <tr></tr>
@@ -65,8 +65,64 @@
                             </tr>
                         </table>
                     </div>
+                    <div class="container border bg-white text-center fw-bold" id="createPage" hidden>
+                        <div class="row">
+                            <div class="col">
+                            </div>
+                            <div class="col-4">
+                                <form action="#" method="post" >
+                                    <br>
+                                    First name<br>
+                                    <input class="form-control" type="text" required/><br>
+                                    Last name<br>
+                                    <input class="form-control" type="text" required/><br>
+                                    Age<br>
+                                    <input class="form-control" type="number" required/><br>
+                                    Email<br>
+                                    <input class="form-control" type="text" required/><br>
+                                    Password<br>
+                                    <input class="form-control" type="password" required/><br>
+                                    Roles<br>
+                                    <select class="form-select" multiple size=2>
+                                        <option value="1">ROLE_USER</option>
+                                        <option value="2">ROLE_ADMIN</option>
+                                    </select>
+                                    <div class="p-3">
+                                        <button type="submit" class="btn btn-success">Add new user</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col">
+                            </div>
+                        </div>
+                    </div>
                     <br>
                 </ul>
+                <br>
+            </div>
+            <div class="container" id="userPage" hidden>
+                <br>
+                <p class="h1">User information-page</p>
+                <br>
+                <div class="container border">
+                    <br>
+                    <p class="h4">About user</p>
+                </div>
+                <div class="container border bg-white">
+                    <br>
+                    <table class="table table-striped border-top" id="userInfo">
+                        <tr></tr>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">Age</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Role</th>
+                        </tr>
+                    </table>
+                </div>
+                <br>
                 <br>
             </div>
         </div>
