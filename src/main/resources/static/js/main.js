@@ -6,15 +6,24 @@ $(document).ready(function(){
     $.post("/api/get-current",function (data) {
         $("#currentUser").html(data["email"]);
         $("#currentRoles").html(data["rolesByString"]);
-            showAdminPage();
-    })
+        fillUserTable();
+        showAdminPage();
+    });
+
 });
 
-$("#userLink").on("click",function () { showUserPage()});
+$("#createUserButton").on("click", function () {
+    $.post("/api/add", $("#createForm").serialize());
+});
+
+$("#userLink").on("click",function () { showUserPage();});
 
 $("#newUserLink").on("click",function () { showUserCreatePage();});
 
-$("#adminLink").on("click",function () {showAdminPage();});
+$("#adminLink").on("click",function () {
+    fillUserTable();
+    showAdminPage();
+});
 
 $("#userTableLink").on("click",function () {showAdminPage();});
 
@@ -37,10 +46,24 @@ function showAdminPage() {
     $("#newUserLink").removeClass("active");
     $("#userLink").removeClass("active");
     $("#adminLink").addClass("active");
+}
+function showUserPage() {
+    $("#createPage").attr("hidden", "hidden");
+    $("#usersTablePage").attr("hidden", "hidden");
+    $("#adminPage").attr("hidden", "hidden");
+    $("#userPage").removeAttr("hidden");
+    $("#userTableLink").removeClass("active");
+    $("#newUserLink").removeClass("active");
+    $("#userLink").addClass("active");
+    $("#adminLink").removeClass("active");
+}
+
+function fillUserTable() {
+    $('.userRow').remove();
     $.post("/api/get-all", function (data) {
         let tbl_body = "";
         $.each(data, function() {
-            let tbl_row = '<tr class="user' + this["id"] +'">';
+            let tbl_row = '<tr class="userRow" id="user' + this["id"] +'">';
             tbl_row += "<td>"+this["id"]+"</td>";
             tbl_row += "<td>"+this["firstName"]+"</td>";
             tbl_row += "<td>"+this["lastName"]+"</td>";
@@ -53,14 +76,4 @@ function showAdminPage() {
         });
         $("#usersTable").append(tbl_body);
     })
-}
-function showUserPage() {
-    $("#createPage").attr("hidden", "hidden");
-    $("#usersTablePage").attr("hidden", "hidden");
-    $("#adminPage").attr("hidden", "hidden");
-    $("#userPage").removeAttr("hidden");
-    $("#userTableLink").removeClass("active");
-    $("#newUserLink").removeClass("active");
-    $("#userLink").addClass("active");
-    $("#adminLink").removeClass("active");
 }
