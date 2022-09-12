@@ -3,7 +3,7 @@ const user = {id: 1, name: "ROLE_USER"};
 const admin = {id: 2, name: "ROLE_ADMIN"};
 
 $(document).ready(function(){
-    $.post("/api/get-current",function (data) {
+    $.get("/api/users/current",function (data) {
         $("#currentUser").html(data["email"]);
         $("#currentRoles").html(data["rolesByString"]);
         fillUserTable();
@@ -13,7 +13,24 @@ $(document).ready(function(){
 });
 
 $("#createUserButton").on("click", function () {
-    $.post("/api/add", $("#createForm").serialize());
+    const json = {};
+    let array = $("#createForm").serializeArray();
+    console.log(array);
+    $.each(array, function () {
+        json[this.name] = this.value || "";
+    });
+    console.log(json);
+    $.ajax({
+        url: '/api/users',
+        type: 'POST',
+        data: JSON.stringify(json),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        async: false,
+        success: function (data) {
+            $("#usersTable").append(createUserRow(data));
+            showAdminPage();}
+    });
 });
 
 $("#userLink").on("click",function () { showUserPage();});
@@ -60,20 +77,24 @@ function showUserPage() {
 
 function fillUserTable() {
     $('.userRow').remove();
-    $.post("/api/get-all", function (data) {
+    $.get("/api/users/all", function (data) {
         let tbl_body = "";
         $.each(data, function() {
-            let tbl_row = '<tr class="userRow" id="user' + this["id"] +'">';
-            tbl_row += "<td>"+this["id"]+"</td>";
-            tbl_row += "<td>"+this["firstName"]+"</td>";
-            tbl_row += "<td>"+this["lastName"]+"</td>";
-            tbl_row += "<td>"+this["age"]+"</td>";
-            tbl_row += "<td>"+this["email"]+"</td>";
-            tbl_row += "<td>"+this["rolesByString"]+"</td>";
-            tbl_row += "<td>"+this["email"]+"</td>";
-            tbl_row += "<td>"+this["email"]+"</td>";
-            tbl_body += tbl_row+"</tr>";
+            tbl_body += createUserRow(this);
         });
         $("#usersTable").append(tbl_body);
     })
+}
+
+function createUserRow(user) {
+    let tbl_row = '<tr class="userRow" id="user' + user["id"] +'">';
+    tbl_row += "<td>"+user["id"]+"</td>";
+    tbl_row += "<td>"+user["firstName"]+"</td>";
+    tbl_row += "<td>"+user["lastName"]+"</td>";
+    tbl_row += "<td>"+user["age"]+"</td>";
+    tbl_row += "<td>"+user["email"]+"</td>";
+    tbl_row += "<td>"+user["rolesByString"]+"</td>";
+    tbl_row += "<td>"+user["email"]+"</td>";
+    tbl_row += "<td>"+user["email"]+"</td>"+"</tr>";
+    return tbl_row;
 }

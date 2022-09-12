@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/users")
 public class TestController {
     private UserService userService;
     private RoleService roleService;
@@ -23,42 +23,35 @@ public class TestController {
         this.roleService = roleService;
     }
 
-    @RequestMapping(path = "/get-all",
-            method = {RequestMethod.POST})
+    @RequestMapping(path = "/all",
+            method = {RequestMethod.GET})
     public Set<User> getAllUser() {
         return userService.getAllUsers();
     }
 
-    @RequestMapping(path = "/add",
+    @RequestMapping(path = "",
             method = {RequestMethod.POST})
-    public String addUser(@RequestBody User user) {
-        userService.addUser(user);
-        return "success";
+    public User addUser(@RequestBody User user) {
+        return userService.addUser(user);
     }
 
     @RequestMapping(path = "/delete",
             method = {RequestMethod.POST})
-    public String deleteUser( Long id) {
+    public String deleteUser(Long id) {
         userService.removeUser(id);
         return "success";
     }
 
-    @RequestMapping(path = "/get-current",
-            method = {RequestMethod.POST})
+    @RequestMapping(path = "/current",
+            method = {RequestMethod.GET})
     public UserDetails getCurrentUser(@AuthenticationPrincipal UserDetails user) {
         return user;
     }
 
-    @RequestMapping(path = "/update",
-            method = {RequestMethod.POST})
+    @RequestMapping(path = "",
+            method = {RequestMethod.PUT})
     public String updateUser(@RequestBody User user) {
         userService.updateUser(user);
         return "success";
-    }
-
-    @RequestMapping(path = "/get",
-            method = {RequestMethod.POST})
-    public User getUserById(Long id) {
-        return userService.getUserById(id);
     }
 }

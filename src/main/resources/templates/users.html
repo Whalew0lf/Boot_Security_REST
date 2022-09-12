@@ -73,22 +73,22 @@
                                 <form id="createForm">
                                     <br>
                                     First name<br>
-                                    <input class="form-control" type="text" required/><br>
+                                    <input class="form-control" id="firstName" name="firstName" type="text" required/><br>
                                     Last name<br>
-                                    <input class="form-control" type="text" required/><br>
+                                    <input class="form-control" id="lastName" name="lastName" type="text" required/><br>
                                     Age<br>
-                                    <input class="form-control" type="number" required/><br>
+                                    <input class="form-control" id="number" name="number" type="number" required/><br>
                                     Email<br>
-                                    <input class="form-control" type="text" required/><br>
+                                    <input class="form-control" id="email" name="email" type="text" required/><br>
                                     Password<br>
-                                    <input class="form-control" type="password" required/><br>
+                                    <input class="form-control" id="password" name="password" type="password" required/><br>
                                     Roles<br>
-                                    <select class="form-select" multiple size=2>
+                                    <select id="role" name="role" class="form-select" multiple size=2>
                                         <option value="1">ROLE_USER</option>
                                         <option value="2">ROLE_ADMIN</option>
                                     </select>
                                     <div class="p-3">
-                                        <button id="createUserButton" type="submit" class="btn btn-success">Add new user</button>
+                                        <button id="createUserButton" class="btn btn-success" type="button">Add new user</button>
                                     </div>
                                 </form>
                             </div>

@@ -8,7 +8,7 @@ import java.util.Set;
 
 public interface UserService extends UserDetailsService {
     Set<User> getAllUsers();
-    void addUser(User user);
+    User addUser(User user);
     void removeUser(Long id);
     void updateUser(User user);
     User getUserById(Long id);
