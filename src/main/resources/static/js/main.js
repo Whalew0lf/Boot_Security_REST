@@ -1,8 +1,7 @@
-const user = {id: 1, name: "ROLE_USER"};
-
-const admin = {id: 2, name: "ROLE_ADMIN"};
+const roles = [{"id":1,"name":"ROLE_USER"},{"id":2,"name":"ROLE_ADMIN"}];
 
 $(document).ready(function(){
+    alert("загрузка страницы");
     $.get("/api/users/current",function (data) {
         $("#currentUser").html(data["email"]);
         $("#currentRoles").html(data["rolesByString"]);
@@ -12,14 +11,17 @@ $(document).ready(function(){
 
 });
 
-$("#createUserButton").on("click", function () {
-    const json = {};
+$("#createForm").on("submit", function (e) {
+    e.preventDefault();
+    const json = {"role" : []};
     let array = $("#createForm").serializeArray();
-    console.log(array);
     $.each(array, function () {
-        json[this.name] = this.value || "";
+        if(this.name == "role") {
+            json[this.name].push(roles[Number(this.value) - 1]);
+        } else {
+            json[this.name] = this.value || "";
+        }
     });
-    console.log(json);
     $.ajax({
         url: '/api/users',
         type: 'POST',
