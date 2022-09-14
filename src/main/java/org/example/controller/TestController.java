@@ -54,4 +54,10 @@ public class TestController {
         userService.updateUser(user);
         return "success";
     }
+
+    @RequestMapping (path = "/{id}"
+            , method = {RequestMethod.GET})
+    public User getUserById(@PathVariable Long id) {
+        return userService.getUserById(id);
+    }
 }

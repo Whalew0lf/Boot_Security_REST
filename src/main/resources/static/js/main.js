@@ -1,3 +1,5 @@
+
+
 const roles = [{"id":1,"name":"ROLE_USER"},{"id":2,"name":"ROLE_ADMIN"}];
 
 $(document).ready(function(){
@@ -17,7 +19,7 @@ $("#createForm").on("submit", function (e) {
     let array = $("#createForm").serializeArray();
     $.each(array, function () {
         if(this.name == "role") {
-            json[this.name].push(roles[Number(this.value) - 1]);
+            json[this.name].push(roles[this.value - 1]);
         } else {
             json[this.name] = this.value || "";
         }
@@ -37,6 +39,8 @@ $("#createForm").on("submit", function (e) {
 
 $("#userLink").on("click",function () { showUserPage();});
 
+
+
 $("#newUserLink").on("click",function () { showUserCreatePage();});
 
 $("#adminLink").on("click",function () {
@@ -46,6 +50,16 @@ $("#adminLink").on("click",function () {
 
 $("#userTableLink").on("click",function () {showAdminPage();});
 
+$(document).on("click", ".removeUserButton", function () {
+    let myModal = new bootstrap.Modal(document.getElementById("deleteModal"), {});
+    myModal.show();
+    $.get("/api/users/"+$(this).attr("delUserId"),function (data) {
+        $("#currentUser").html(data["email"]);
+        $("#currentRoles").html(data["rolesByString"]);
+        fillUserTable();
+    });
+
+});
 function showUserCreatePage() {
     $("#usersTablePage").attr("hidden", "hidden");
     $("#userPage").attr("hidden", "hidden");
@@ -97,6 +111,6 @@ function createUserRow(user) {
     tbl_row += "<td>"+user["email"]+"</td>";
     tbl_row += "<td>"+user["rolesByString"]+"</td>";
     tbl_row += "<td>"+user["email"]+"</td>";
-    tbl_row += "<td>"+user["email"]+"</td>"+"</tr>";
+    tbl_row += "<td><button class='btn btn-danger removeUserButton' deluserid="+user["id"]+">Delete</button></tr>";
     return tbl_row;
 }
