@@ -35,9 +35,9 @@ public class TestController {
         return userService.addUser(user);
     }
 
-    @RequestMapping(path = "/delete",
-            method = {RequestMethod.POST})
-    public String deleteUser(Long id) {
+    @RequestMapping(path = "/{id}",
+            method = {RequestMethod.DELETE})
+    public String deleteUser(@PathVariable Long id) {
         userService.removeUser(id);
         return "success";
     }
@@ -57,7 +57,7 @@ public class TestController {
 
     @RequestMapping (path = "/{id}"
             , method = {RequestMethod.GET})
-    public User getUserById(@PathVariable Long id) {
+    public User getUserById(@PathVariable(name = "id") Long id) {
         return userService.getUserById(id);
     }
 }

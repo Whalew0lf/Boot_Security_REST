@@ -1,9 +1,7 @@
-
-
 const roles = [{"id":1,"name":"ROLE_USER"},{"id":2,"name":"ROLE_ADMIN"}];
+let deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"), {});
 
 $(document).ready(function(){
-    alert("загрузка страницы");
     $.get("/api/users/current",function (data) {
         $("#currentUser").html(data["email"]);
         $("#currentRoles").html(data["rolesByString"]);
@@ -37,6 +35,20 @@ $("#createForm").on("submit", function (e) {
     });
 });
 
+$("#confirmDeleteButton").on("click", function () {
+    let id = $(this).attr('userid');
+    $.ajax({
+        url: "/api/users/"+id,
+        type: 'DELETE',
+        async: false,
+        success: function (data) {
+            alert("#user"+id);
+            $("#user"+$(this).attr('userid')).remove();
+            deleteModal.hide();
+        }
+    });
+});
+
 $("#userLink").on("click",function () { showUserPage();});
 
 
@@ -51,15 +63,17 @@ $("#adminLink").on("click",function () {
 $("#userTableLink").on("click",function () {showAdminPage();});
 
 $(document).on("click", ".removeUserButton", function () {
-    let myModal = new bootstrap.Modal(document.getElementById("deleteModal"), {});
-    myModal.show();
     $.get("/api/users/"+$(this).attr("delUserId"),function (data) {
-        $("#currentUser").html(data["email"]);
-        $("#currentRoles").html(data["rolesByString"]);
-        fillUserTable();
+        $("#deleteFormId").attr("value", data["id"]);
+        $("#deleteFormFirstName").attr("value", data["firstName"]);
+        $("#deleteFormLastName").attr("value", data["lastName"]);
+        $("#deleteFormAge").attr("value", data["age"]);
+        $("#deleteFormEmail").attr("value", data["email"]);
+        $("#confirmDeleteButton").attr('userid', data["id"]);
+        deleteModal.show();
     });
-
 });
+
 function showUserCreatePage() {
     $("#usersTablePage").attr("hidden", "hidden");
     $("#userPage").attr("hidden", "hidden");
