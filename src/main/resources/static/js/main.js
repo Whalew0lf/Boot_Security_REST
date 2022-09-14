@@ -43,7 +43,7 @@ $("#confirmDeleteButton").on("click", function () {
         async: false,
         success: function (data) {
             alert("#user"+id);
-            $("#user"+$(this).attr('userid')).remove();
+            $("#user19").remove();
             deleteModal.hide();
         }
     });
