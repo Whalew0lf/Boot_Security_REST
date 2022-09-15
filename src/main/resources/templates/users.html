@@ -169,6 +169,49 @@
         </div>
     </div>
 </div>
+<div id='editModal' class="modal" tabindex="-2">
+    <div class="modal-dialog">
+        <form id="editForm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEdit">Edit user</h5>
+                    <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-3">
+                        </div>
+                        <div class="col-6 text-center fw-bold">
+                            <br>
+                            ID<br>
+                            <input class="form-control" type="text" id="editFormId" readonly required name="id"><br>
+                            <br>
+                            First name<br>
+                            <input class="form-control" type="text" id="editFormFirstName" required name="firstName"/><br>
+                            Last name<br>
+                            <input class="form-control" type="text" id="editFormLastName" required name="lastName"/><br>
+                            Age<br>
+                            <input class="form-control" type="number" id="editFormAge" required name="age"/><br>
+                            Email<br>
+                            <input class="form-control" type="email" id="editFormEmail" required name="email" /><br>
+                            Password<br>
+                            <input class="form-control" type="password" id="editFormPassword" required name="password"/><br>
+                            Roles<br>
+                            <select class="form-select" name="role" multiple size=2>
+                                <option value="1">ROLE_USER</option>
+                                <option value="2">ROLE_ADMIN</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="confirmEditUser">Edit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 <script type="text/javascript" th:src="@{/js/main.js}"></script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 const roles = [{"id":1,"name":"ROLE_USER"},{"id":2,"name":"ROLE_ADMIN"}];
 let deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"), {});
+let editModal = new bootstrap.Modal(document.getElementById("editModal"), {});
 
 $(document).ready(function(){
     $.get("/api/users/current",function (data) {
@@ -11,9 +12,9 @@ $(document).ready(function(){
 
 });
 
-$("#createForm").on("submit", function (e) {
-    e.preventDefault();
-    const json = {"role" : []};
+$("#createForm").on("submit", function (el) {
+    el.preventDefault();
+    let json = {"role" : []};
     let array = $("#createForm").serializeArray();
     $.each(array, function () {
         if(this.name == "role") {
@@ -42,9 +43,35 @@ $("#confirmDeleteButton").on("click", function () {
         type: 'DELETE',
         async: false,
         success: function (data) {
-            alert("#user"+id);
-            $("#user19").remove();
+            $("#user"+id).remove();
             deleteModal.hide();
+        }
+    });
+});
+
+$("#editForm").on("submit", function (el) {
+    alert("функция");
+    el.preventDefault();
+    let json = {"role" : []};
+    let array = $("#editForm").serializeArray();
+    console.log(array);
+    $.each(array, function () {
+        if(this.name == "role") {
+            json[this.name].push(roles[this.value - 1]);
+        } else {
+            json[this.name] = this.value || "";
+        }
+    });
+    $.ajax({
+        url: '/api/users',
+        type: 'PUT',
+        data: JSON.stringify(json),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        async: false,
+        success: function (data) {
+            $("#user"+data["id"]).replaceWith(createUserRow(data));
+            editModal.hide();
         }
     });
 });
@@ -71,6 +98,17 @@ $(document).on("click", ".removeUserButton", function () {
         $("#deleteFormEmail").attr("value", data["email"]);
         $("#confirmDeleteButton").attr('userid', data["id"]);
         deleteModal.show();
+    });
+});
+
+$(document).on("click", ".editUserButton", function () {
+    $.get("/api/users/"+$(this).attr("editUserId"),function (data) {
+        $("#editFormId").attr("value", data["id"]);
+        $("#editFormFirstName").attr("value", data["firstName"]);
+        $("#editFormLastName").attr("value", data["lastName"]);
+        $("#editFormAge").attr("value", data["age"]);
+        $("#editFormEmail").attr("value", data["email"]);
+        editModal.show();
     });
 });
 
@@ -124,7 +162,7 @@ function createUserRow(user) {
     tbl_row += "<td>"+user["age"]+"</td>";
     tbl_row += "<td>"+user["email"]+"</td>";
     tbl_row += "<td>"+user["rolesByString"]+"</td>";
-    tbl_row += "<td>"+user["email"]+"</td>";
-    tbl_row += "<td><button class='btn btn-danger removeUserButton' deluserid="+user["id"]+">Delete</button></tr>";
+    tbl_row += "<td><button class='btn btn-info text-light editUserButton'edituserid="+user['id']+">Edit</button></td>";
+    tbl_row += "<td><button class='btn btn-danger removeUserButton' deluserid="+user['id']+">Delete</button></tr>";
     return tbl_row;
 }

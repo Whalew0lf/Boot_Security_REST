@@ -50,9 +50,8 @@ public class TestController {
 
     @RequestMapping(path = "",
             method = {RequestMethod.PUT})
-    public String updateUser(@RequestBody User user) {
-        userService.updateUser(user);
-        return "success";
+    public User updateUser(@RequestBody User user) {
+        return userService.updateUser(user);
     }
 
     @RequestMapping (path = "/{id}"
