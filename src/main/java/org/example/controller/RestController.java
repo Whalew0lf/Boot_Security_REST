@@ -8,17 +8,16 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Set;
 
-@RestController
+@org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/users")
-public class TestController {
+public class RestController {
     private UserService userService;
     private RoleService roleService;
 
     @Autowired
-    public TestController(UserService userService, RoleService roleService) {
+    public RestController(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
     }

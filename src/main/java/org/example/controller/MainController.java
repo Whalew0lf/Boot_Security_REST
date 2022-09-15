@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class MainController {
     @GetMapping("/")
     public ModelAndView getMainPage() {
-        ModelAndView modelAndView = new ModelAndView("/index");
+        ModelAndView modelAndView = new ModelAndView("/users");
         return modelAndView;
     }
 }

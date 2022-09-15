@@ -50,7 +50,6 @@ $("#confirmDeleteButton").on("click", function () {
 });
 
 $("#editForm").on("submit", function (el) {
-    alert("функция");
     el.preventDefault();
     let json = {"role" : []};
     let array = $("#editForm").serializeArray();
@@ -132,6 +131,7 @@ function showAdminPage() {
     $("#userLink").removeClass("active");
     $("#adminLink").addClass("active");
 }
+
 function showUserPage() {
     $("#createPage").attr("hidden", "hidden");
     $("#usersTablePage").attr("hidden", "hidden");
