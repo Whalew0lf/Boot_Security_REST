@@ -6,8 +6,20 @@ $(document).ready(function(){
     $.get("/api/users/current",function (data) {
         $("#currentUser").html(data["email"]);
         $("#currentRoles").html(data["rolesByString"]);
-        fillUserTable();
-        showAdminPage();
+        let isAdmin = false;
+        for(const role of data["role"]) {
+            if(role["id"] == 2) {
+                isAdmin = true;
+            }
+
+        }
+        if (isAdmin) {
+            fillUserTable();
+            showAdminPage();
+        } else {
+            $("#adminLink").hide();
+            showUserPage();
+        }
     });
 
 });
@@ -133,6 +145,17 @@ function showAdminPage() {
 }
 
 function showUserPage() {
+    $.get("/api/users/current",function (data) {
+        let tbl_row = '<tr id="currentUserRow">';
+        tbl_row += "<td>"+data["id"]+"</td>";
+        tbl_row += "<td>"+data["firstName"]+"</td>";
+        tbl_row += "<td>"+data["lastName"]+"</td>";
+        tbl_row += "<td>"+data["age"]+"</td>";
+        tbl_row += "<td>"+data["email"]+"</td>";
+        tbl_row += "<td>"+data["rolesByString"]+"</td></tr>";
+        $("#currentUserRow").remove();
+        $("#userInfo").append(tbl_row);
+    });
     $("#createPage").attr("hidden", "hidden");
     $("#usersTablePage").attr("hidden", "hidden");
     $("#adminPage").attr("hidden", "hidden");
