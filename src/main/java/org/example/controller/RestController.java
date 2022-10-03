@@ -38,7 +38,7 @@ public class RestController {
             method = {RequestMethod.DELETE})
     public String deleteUser(@PathVariable Long id) {
         userService.removeUser(id);
-        return "success";
+        return null;
     }
 
     @RequestMapping(path = "/current",
