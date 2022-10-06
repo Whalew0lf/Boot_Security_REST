@@ -14,12 +14,10 @@ import java.util.Set;
 @RequestMapping("/api/users")
 public class RestController {
     private UserService userService;
-    private RoleService roleService;
 
     @Autowired
-    public RestController(UserService userService, RoleService roleService) {
+    public RestController(UserService userService) {
         this.userService = userService;
-        this.roleService = roleService;
     }
 
     @RequestMapping(path = "/all",
